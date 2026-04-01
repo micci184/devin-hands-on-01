@@ -1,79 +1,77 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 
-import { X } from 'lucide-react'
+import { X } from "lucide-react";
 
-import { createTaskSchema } from '@/lib/validations/task'
+import { createTaskSchema } from "@/lib/validations/task";
 
-import type { CreateTaskInput } from '@/lib/validations/task'
-import type { TaskStatus } from '@prisma/client'
+import type { CreateTaskInput } from "@/lib/validations/task";
+import type { TaskStatus } from "@prisma/client";
 
 interface TaskCreateModalProps {
-  projectId: string
-  defaultStatus: TaskStatus
-  onClose: () => void
+  projectId: string;
+  defaultStatus: TaskStatus;
+  onClose: () => void;
 }
 
-export const TaskCreateModal = ({
-  projectId,
-  defaultStatus,
-  onClose,
-}: TaskCreateModalProps) => {
-  const router = useRouter()
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof CreateTaskInput, string>>>({})
+export const TaskCreateModal = ({ projectId, defaultStatus, onClose }: TaskCreateModalProps) => {
+  const router = useRouter();
+  const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof CreateTaskInput, string>>>(
+    {},
+  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    setError('')
-    setFieldErrors({})
+    e.preventDefault();
+    setError("");
+    setFieldErrors({});
 
-    const formData = new FormData(e.currentTarget)
+    const formData = new FormData(e.currentTarget);
     const data = {
-      title: formData.get('title') as string,
-      description: (formData.get('description') as string) || undefined,
-      priority: formData.get('priority') as string,
+      title: formData.get("title") as string,
+      description: (formData.get("description") as string) || undefined,
+      priority: formData.get("priority") as string,
       status: defaultStatus,
-      dueDate: (formData.get('dueDate') as string) || undefined,
-    }
+      dueDate: (formData.get("dueDate") as string) || undefined,
+    };
 
-    const parsed = createTaskSchema.safeParse(data)
+    const parsed = createTaskSchema.safeParse(data);
     if (!parsed.success) {
-      const errors: Partial<Record<keyof CreateTaskInput, string>> = {}
+      const errors: Partial<Record<keyof CreateTaskInput, string>> = {};
       for (const issue of parsed.error.issues) {
-        const field = issue.path[0] as keyof CreateTaskInput
-        if (!errors[field]) errors[field] = issue.message
+        const field = issue.path[0] as keyof CreateTaskInput;
+        if (!errors[field]) errors[field] = issue.message;
       }
-      setFieldErrors(errors)
-      return
+      setFieldErrors(errors);
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
     try {
       const res = await fetch(`/api/projects/${projectId}/tasks`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(parsed.data),
-      })
+      });
 
-      const json = await res.json()
+      const json = await res.json();
 
       if (!res.ok) {
-        setError(json.error?.message ?? 'タスクの作成に失敗しました')
-        return
+        setError(json.error?.message ?? "タスクの作成に失敗しました");
+        return;
       }
 
-      router.refresh()
-      onClose()
+      router.refresh();
+      onClose();
     } catch {
-      setError('タスクの作成中にエラーが発生しました')
+      setError("タスクの作成中にエラーが発生しました");
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/20">
@@ -90,9 +88,7 @@ export const TaskCreateModal = ({
         </div>
 
         {error && (
-          <div className="mb-4 rounded-md bg-danger/10 p-3 text-sm text-danger">
-            {error}
-          </div>
+          <div className="mb-4 rounded-md bg-danger/10 p-3 text-sm text-danger">{error}</div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -107,9 +103,7 @@ export const TaskCreateModal = ({
               className="w-full rounded-md border border-foreground/20 bg-background px-3 py-2 text-sm text-foreground placeholder:text-foreground/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               placeholder="タスクのタイトル"
             />
-            {fieldErrors.title && (
-              <p className="mt-1 text-sm text-danger">{fieldErrors.title}</p>
-            )}
+            {fieldErrors.title && <p className="mt-1 text-sm text-danger">{fieldErrors.title}</p>}
           </div>
 
           <div>
@@ -170,11 +164,11 @@ export const TaskCreateModal = ({
               disabled={loading}
               className="rounded-md bg-primary px-4 py-2 text-sm font-medium text-primary-foreground hover:opacity-90 disabled:opacity-50"
             >
-              {loading ? '作成中...' : '作成'}
+              {loading ? "作成中..." : "作成"}
             </button>
           </div>
         </form>
       </div>
     </div>
-  )
-}
+  );
+};

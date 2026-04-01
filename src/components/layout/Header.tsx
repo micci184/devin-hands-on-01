@@ -44,16 +44,10 @@ export const Header = () => {
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (
-        themeMenuRef.current &&
-        !themeMenuRef.current.contains(e.target as Node)
-      ) {
+      if (themeMenuRef.current && !themeMenuRef.current.contains(e.target as Node)) {
         setShowThemeMenu(false);
       }
-      if (
-        userMenuRef.current &&
-        !userMenuRef.current.contains(e.target as Node)
-      ) {
+      if (userMenuRef.current && !userMenuRef.current.contains(e.target as Node)) {
         setShowUserMenu(false);
       }
     };
@@ -157,9 +151,7 @@ export const Header = () => {
                 <p className="text-sm font-medium text-foreground truncate">
                   {session?.user?.name ?? "ユーザー"}
                 </p>
-                <p className="text-xs text-foreground/60 truncate">
-                  {session?.user?.email ?? ""}
-                </p>
+                <p className="text-xs text-foreground/60 truncate">{session?.user?.email ?? ""}</p>
               </div>
               <button
                 onClick={() => signOut({ callbackUrl: "/login" })}
@@ -177,8 +169,7 @@ export const Header = () => {
         <div className="absolute left-0 top-14 z-50 w-full border-b border-foreground/10 bg-background p-2 shadow-lg md:hidden">
           <nav className="space-y-1">
             {mobileNavItems.map((item) => {
-              const isActive =
-                pathname === item.href || pathname.startsWith(item.href + "/");
+              const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
               const Icon = item.icon;
 
               return (

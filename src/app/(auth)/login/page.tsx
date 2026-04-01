@@ -13,9 +13,7 @@ const LoginPage = () => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
-  const [fieldErrors, setFieldErrors] = useState<
-    Partial<Record<keyof LoginInput, string>>
-  >({});
+  const [fieldErrors, setFieldErrors] = useState<Partial<Record<keyof LoginInput, string>>>({});
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -62,22 +60,15 @@ const LoginPage = () => {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background">
       <div className="w-full max-w-md rounded-lg border border-foreground/10 bg-background p-8 shadow-lg">
-        <h1 className="mb-6 text-center text-2xl font-bold text-foreground">
-          ログイン
-        </h1>
+        <h1 className="mb-6 text-center text-2xl font-bold text-foreground">ログイン</h1>
 
         {error && (
-          <div className="mb-4 rounded-md bg-danger/10 p-3 text-sm text-danger">
-            {error}
-          </div>
+          <div className="mb-4 rounded-md bg-danger/10 p-3 text-sm text-danger">{error}</div>
         )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label
-              htmlFor="email"
-              className="mb-1 block text-sm font-medium text-foreground"
-            >
+            <label htmlFor="email" className="mb-1 block text-sm font-medium text-foreground">
               メールアドレス
             </label>
             <input
@@ -88,16 +79,11 @@ const LoginPage = () => {
               className="w-full rounded-md border border-foreground/20 bg-background px-3 py-2 text-foreground placeholder:text-foreground/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
               placeholder="mail@example.com"
             />
-            {fieldErrors.email && (
-              <p className="mt-1 text-sm text-danger">{fieldErrors.email}</p>
-            )}
+            {fieldErrors.email && <p className="mt-1 text-sm text-danger">{fieldErrors.email}</p>}
           </div>
 
           <div>
-            <label
-              htmlFor="password"
-              className="mb-1 block text-sm font-medium text-foreground"
-            >
+            <label htmlFor="password" className="mb-1 block text-sm font-medium text-foreground">
               パスワード
             </label>
             <input

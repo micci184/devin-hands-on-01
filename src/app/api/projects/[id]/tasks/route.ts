@@ -1,34 +1,34 @@
-import { NextResponse } from 'next/server'
+import { NextResponse } from "next/server";
 
-import { prisma } from '@/lib/prisma'
-import { auth } from '@/lib/auth'
-import { createTaskSchema } from '@/lib/validations/task'
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
+import { createTaskSchema } from "@/lib/validations/task";
 
-import type { NextRequest } from 'next/server'
+import type { NextRequest } from "next/server";
 
 export const GET = async (
   _request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) => {
   try {
-    const session = await auth()
+    const session = await auth();
     if (!session?.user) {
       return NextResponse.json(
-        { error: { code: 'UNAUTHORIZED', message: '認証が必要です' } },
+        { error: { code: "UNAUTHORIZED", message: "認証が必要です" } },
         { status: 401 },
-      )
+      );
     }
 
-    const { id: projectId } = await params
+    const { id: projectId } = await params;
 
     const project = await prisma.project.findUnique({
       where: { id: projectId },
-    })
+    });
     if (!project) {
       return NextResponse.json(
-        { error: { code: 'NOT_FOUND', message: 'プロジェクトが見つかりません' } },
+        { error: { code: "NOT_FOUND", message: "プロジェクトが見つかりません" } },
         { status: 404 },
-      )
+      );
     }
 
     const tasks = await prisma.task.findMany({
@@ -38,65 +38,65 @@ export const GET = async (
         reporter: { select: { id: true, name: true, avatarUrl: true } },
         taskCategories: { include: { category: true } },
       },
-      orderBy: [{ sortOrder: 'asc' }, { createdAt: 'desc' }],
-    })
+      orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+    });
 
-    return NextResponse.json({ data: tasks })
+    return NextResponse.json({ data: tasks });
   } catch (error) {
-    console.error('[GET /api/projects/[id]/tasks]', error)
+    console.error("[GET /api/projects/[id]/tasks]", error);
     return NextResponse.json(
-      { error: { code: 'INTERNAL_ERROR', message: 'サーバーエラーが発生しました' } },
+      { error: { code: "INTERNAL_ERROR", message: "サーバーエラーが発生しました" } },
       { status: 500 },
-    )
+    );
   }
-}
+};
 
 export const POST = async (
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> },
 ) => {
   try {
-    const session = await auth()
+    const session = await auth();
     if (!session?.user) {
       return NextResponse.json(
-        { error: { code: 'UNAUTHORIZED', message: '認証が必要です' } },
+        { error: { code: "UNAUTHORIZED", message: "認証が必要です" } },
         { status: 401 },
-      )
+      );
     }
 
-    const { id: projectId } = await params
+    const { id: projectId } = await params;
 
     const project = await prisma.project.findUnique({
       where: { id: projectId },
-    })
+    });
     if (!project) {
       return NextResponse.json(
-        { error: { code: 'NOT_FOUND', message: 'プロジェクトが見つかりません' } },
+        { error: { code: "NOT_FOUND", message: "プロジェクトが見つかりません" } },
         { status: 404 },
-      )
+      );
     }
 
-    const body = await request.json()
-    const parsed = createTaskSchema.safeParse(body)
+    const body = await request.json();
+    const parsed = createTaskSchema.safeParse(body);
 
     if (!parsed.success) {
       return NextResponse.json(
         {
           error: {
-            code: 'VALIDATION_ERROR',
+            code: "VALIDATION_ERROR",
             message: parsed.error.issues[0].message,
           },
         },
         { status: 400 },
-      )
+      );
     }
 
     const lastTask = await prisma.task.findFirst({
       where: { projectId },
-      orderBy: { taskNumber: 'desc' },
+      orderBy: { taskNumber: "desc" },
       select: { taskNumber: true },
-    })
-    const taskNumber = (lastTask?.taskNumber ?? 0) + 1
+    });
+    const taskNumber = (lastTask?.taskNumber ?? 0) + 1;
 
     const task = await prisma.task.create({
       data: {
@@ -114,14 +114,14 @@ export const POST = async (
         assignee: { select: { id: true, name: true, avatarUrl: true } },
         reporter: { select: { id: true, name: true, avatarUrl: true } },
       },
-    })
+    });
 
-    return NextResponse.json({ data: task }, { status: 201 })
+    return NextResponse.json({ data: task }, { status: 201 });
   } catch (error) {
-    console.error('[POST /api/projects/[id]/tasks]', error)
+    console.error("[POST /api/projects/[id]/tasks]", error);
     return NextResponse.json(
-      { error: { code: 'INTERNAL_ERROR', message: 'サーバーエラーが発生しました' } },
+      { error: { code: "INTERNAL_ERROR", message: "サーバーエラーが発生しました" } },
       { status: 500 },
-    )
+    );
   }
-}
+};

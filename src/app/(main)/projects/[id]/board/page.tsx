@@ -1,27 +1,27 @@
-import { redirect } from 'next/navigation'
+import { redirect } from "next/navigation";
 
-import { prisma } from '@/lib/prisma'
-import { auth } from '@/lib/auth'
-import { KanbanBoard } from '@/components/board/KanbanBoard'
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/lib/auth";
+import { KanbanBoard } from "@/components/board/KanbanBoard";
 
 interface BoardPageProps {
-  params: Promise<{ id: string }>
+  params: Promise<{ id: string }>;
 }
 
 const BoardPage = async ({ params }: BoardPageProps) => {
-  const session = await auth()
+  const session = await auth();
   if (!session?.user) {
-    redirect('/login')
+    redirect("/login");
   }
 
-  const { id: projectId } = await params
+  const { id: projectId } = await params;
 
   const project = await prisma.project.findUnique({
     where: { id: projectId },
-  })
+  });
 
   if (!project) {
-    redirect('/projects')
+    redirect("/projects");
   }
 
   const tasks = await prisma.task.findMany({
@@ -30,8 +30,8 @@ const BoardPage = async ({ params }: BoardPageProps) => {
       assignee: { select: { id: true, name: true, avatarUrl: true } },
       reporter: { select: { id: true, name: true, avatarUrl: true } },
     },
-    orderBy: [{ sortOrder: 'asc' }, { createdAt: 'desc' }],
-  })
+    orderBy: [{ sortOrder: "asc" }, { createdAt: "desc" }],
+  });
 
   const serializedTasks = tasks.map((task) => ({
     ...task,
@@ -39,7 +39,7 @@ const BoardPage = async ({ params }: BoardPageProps) => {
     startDate: task.startDate?.toISOString() ?? null,
     createdAt: task.createdAt.toISOString(),
     updatedAt: task.updatedAt.toISOString(),
-  }))
+  }));
 
   return (
     <div>
@@ -50,12 +50,8 @@ const BoardPage = async ({ params }: BoardPageProps) => {
         </div>
       </div>
 
-      <KanbanBoard
-        tasks={serializedTasks}
-        projectId={projectId}
-        projectKey={project.key}
-      />
+      <KanbanBoard tasks={serializedTasks} projectId={projectId} projectKey={project.key} />
     </div>
-  )
-}
-export default BoardPage
+  );
+};
+export default BoardPage;
