@@ -10,13 +10,20 @@ import { createTaskSchema } from "@/lib/validations/task";
 import type { CreateTaskInput } from "@/lib/validations/task";
 import type { TaskStatus } from "@prisma/client";
 
+interface Member {
+  id: string;
+  name: string;
+  avatarUrl: string | null;
+}
+
 interface TaskCreateModalProps {
   projectId: string;
   defaultStatus: TaskStatus;
+  members: Member[];
   onClose: () => void;
 }
 
-export const TaskCreateModal = ({ projectId, defaultStatus, onClose }: TaskCreateModalProps) => {
+export const TaskCreateModal = ({ projectId, defaultStatus, members, onClose }: TaskCreateModalProps) => {
   const router = useRouter();
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
@@ -35,6 +42,7 @@ export const TaskCreateModal = ({ projectId, defaultStatus, onClose }: TaskCreat
       description: (formData.get("description") as string) || undefined,
       priority: formData.get("priority") as string,
       status: defaultStatus,
+      assigneeId: (formData.get("assigneeId") as string) || undefined,
       dueDate: (formData.get("dueDate") as string) || undefined,
     };
 
@@ -139,16 +147,35 @@ export const TaskCreateModal = ({ projectId, defaultStatus, onClose }: TaskCreat
             </div>
 
             <div>
-              <label htmlFor="dueDate" className="mb-1 block text-sm font-medium text-foreground">
-                期限
+              <label htmlFor="assigneeId" className="mb-1 block text-sm font-medium text-foreground">
+                担当者
               </label>
-              <input
-                id="dueDate"
-                name="dueDate"
-                type="date"
+              <select
+                id="assigneeId"
+                name="assigneeId"
+                defaultValue=""
                 className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring"
-              />
+              >
+                <option value="">未割り当て</option>
+                {members.map((member) => (
+                  <option key={member.id} value={member.id}>
+                    {member.name}
+                  </option>
+                ))}
+              </select>
             </div>
+          </div>
+
+          <div>
+            <label htmlFor="dueDate" className="mb-1 block text-sm font-medium text-foreground">
+              期限
+            </label>
+            <input
+              id="dueDate"
+              name="dueDate"
+              type="date"
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring"
+            />
           </div>
 
           <div className="flex justify-end gap-3 pt-2">

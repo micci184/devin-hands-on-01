@@ -21,10 +21,17 @@ interface Task {
   } | null;
 }
 
+interface Member {
+  id: string;
+  name: string;
+  avatarUrl: string | null;
+}
+
 interface KanbanBoardProps {
   tasks: Task[];
   projectId: string;
   projectKey: string;
+  members: Member[];
 }
 
 const columns: { status: TaskStatus; label: string }[] = [
@@ -35,7 +42,7 @@ const columns: { status: TaskStatus; label: string }[] = [
   { status: "DONE", label: "Done" },
 ];
 
-export const KanbanBoard = ({ tasks, projectId, projectKey }: KanbanBoardProps) => {
+export const KanbanBoard = ({ tasks, projectId, projectKey, members }: KanbanBoardProps) => {
   const [showCreateModal, setShowCreateModal] = useState(false);
   const [defaultStatus, setDefaultStatus] = useState<TaskStatus>("BACKLOG");
 
@@ -63,6 +70,7 @@ export const KanbanBoard = ({ tasks, projectId, projectKey }: KanbanBoardProps) 
         <TaskCreateModal
           projectId={projectId}
           defaultStatus={defaultStatus}
+          members={members}
           onClose={() => setShowCreateModal(false)}
         />
       )}
