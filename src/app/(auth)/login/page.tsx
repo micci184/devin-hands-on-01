@@ -59,7 +59,7 @@ const LoginPage = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="w-full max-w-md rounded-lg border border-foreground/10 bg-background p-8 shadow-lg">
+      <div className="w-full max-w-md rounded-lg border border-border bg-card p-8 shadow-lg">
         <h1 className="mb-6 text-center text-2xl font-bold text-foreground">ログイン</h1>
 
         {error && (
@@ -76,7 +76,7 @@ const LoginPage = () => {
               name="email"
               type="email"
               autoComplete="email"
-              className="w-full rounded-md border border-foreground/20 bg-background px-3 py-2 text-foreground placeholder:text-foreground/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring"
               placeholder="mail@example.com"
             />
             {fieldErrors.email && <p className="mt-1 text-sm text-danger">{fieldErrors.email}</p>}
@@ -91,7 +91,7 @@ const LoginPage = () => {
               name="password"
               type="password"
               autoComplete="current-password"
-              className="w-full rounded-md border border-foreground/20 bg-background px-3 py-2 text-foreground placeholder:text-foreground/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring"
               placeholder="••••••••"
             />
             {fieldErrors.password && (
@@ -108,7 +108,7 @@ const LoginPage = () => {
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-foreground/60">
+        <p className="mt-4 text-center text-sm text-muted-foreground">
           アカウントをお持ちでない方は{" "}
           <Link href="/signup" className="text-primary hover:underline">
             サインアップ

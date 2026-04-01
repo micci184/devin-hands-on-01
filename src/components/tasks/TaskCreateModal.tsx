@@ -74,13 +74,13 @@ export const TaskCreateModal = ({ projectId, defaultStatus, onClose }: TaskCreat
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/20">
-      <div className="w-full max-w-lg rounded-lg border border-foreground/10 bg-background p-6 shadow-xl">
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-foreground/20 backdrop-blur-sm">
+      <div className="w-full max-w-lg rounded-lg border border-border bg-card p-6 shadow-xl">
         <div className="mb-4 flex items-center justify-between">
           <h2 className="text-lg font-semibold text-foreground">タスクを作成</h2>
           <button
             onClick={onClose}
-            className="flex h-8 w-8 items-center justify-center rounded-md text-foreground/60 hover:bg-foreground/5 hover:text-foreground"
+            className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground"
             aria-label="閉じる"
           >
             <X size={18} />
@@ -100,7 +100,7 @@ export const TaskCreateModal = ({ projectId, defaultStatus, onClose }: TaskCreat
               id="title"
               name="title"
               type="text"
-              className="w-full rounded-md border border-foreground/20 bg-background px-3 py-2 text-sm text-foreground placeholder:text-foreground/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring"
               placeholder="タスクのタイトル"
             />
             {fieldErrors.title && <p className="mt-1 text-sm text-danger">{fieldErrors.title}</p>}
@@ -114,7 +114,7 @@ export const TaskCreateModal = ({ projectId, defaultStatus, onClose }: TaskCreat
               id="description"
               name="description"
               rows={3}
-              className="w-full rounded-md border border-foreground/20 bg-background px-3 py-2 text-sm text-foreground placeholder:text-foreground/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring"
               placeholder="タスクの説明（Markdown対応）"
             />
           </div>
@@ -128,7 +128,7 @@ export const TaskCreateModal = ({ projectId, defaultStatus, onClose }: TaskCreat
                 id="priority"
                 name="priority"
                 defaultValue="NONE"
-                className="w-full rounded-md border border-foreground/20 bg-background px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring"
               >
                 <option value="NONE">なし</option>
                 <option value="LOW">低</option>
@@ -146,7 +146,7 @@ export const TaskCreateModal = ({ projectId, defaultStatus, onClose }: TaskCreat
                 id="dueDate"
                 name="dueDate"
                 type="date"
-                className="w-full rounded-md border border-foreground/20 bg-background px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+                className="w-full rounded-md border border-input bg-background px-3 py-2 text-sm text-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring"
               />
             </div>
           </div>
@@ -155,7 +155,7 @@ export const TaskCreateModal = ({ projectId, defaultStatus, onClose }: TaskCreat
             <button
               type="button"
               onClick={onClose}
-              className="rounded-md border border-foreground/20 px-4 py-2 text-sm font-medium text-foreground hover:bg-foreground/5"
+              className="rounded-md border border-border px-4 py-2 text-sm font-medium text-foreground hover:bg-accent"
             >
               キャンセル
             </button>

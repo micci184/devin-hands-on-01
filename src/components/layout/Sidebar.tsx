@@ -26,17 +26,17 @@ export const Sidebar = () => {
 
   return (
     <aside
-      className={`hidden md:flex flex-col border-r border-foreground/10 bg-background transition-all duration-200 ${
+      className={`hidden md:flex flex-col border-r border-sidebar-border bg-sidebar transition-all duration-200 ${
         collapsed ? "w-16" : "w-60"
       }`}
     >
-      <div className="flex h-14 items-center justify-between border-b border-foreground/10 px-3">
+      <div className="flex h-14 items-center justify-between border-b border-sidebar-border px-3">
         {!collapsed && (
           <span className="text-sm font-bold text-foreground truncate">TaskBoard</span>
         )}
         <button
           onClick={() => setCollapsed(!collapsed)}
-          className="flex h-8 w-8 items-center justify-center rounded-md text-foreground/60 hover:bg-foreground/5 hover:text-foreground"
+          className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground"
           aria-label={collapsed ? "サイドバーを展開" : "サイドバーを折りたたむ"}
         >
           {collapsed ? <ChevronRight size={16} /> : <ChevronLeft size={16} />}
@@ -54,8 +54,8 @@ export const Sidebar = () => {
               href={item.href}
               className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
                 isActive
-                  ? "bg-primary/10 text-primary font-medium"
-                  : "text-foreground/60 hover:bg-foreground/5 hover:text-foreground"
+                  ? "bg-sidebar-accent text-primary font-medium"
+                  : "text-muted-foreground hover:bg-sidebar-accent hover:text-sidebar-foreground"
               } ${collapsed ? "justify-center" : ""}`}
               title={collapsed ? item.label : undefined}
             >

@@ -73,7 +73,7 @@ const SignupPage = () => {
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="w-full max-w-md rounded-lg border border-foreground/10 bg-background p-8 shadow-lg">
+      <div className="w-full max-w-md rounded-lg border border-border bg-card p-8 shadow-lg">
         <h1 className="mb-6 text-center text-2xl font-bold text-foreground">サインアップ</h1>
 
         {error && (
@@ -90,7 +90,7 @@ const SignupPage = () => {
               name="name"
               type="text"
               autoComplete="name"
-              className="w-full rounded-md border border-foreground/20 bg-background px-3 py-2 text-foreground placeholder:text-foreground/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring"
               placeholder="田中 太郎"
             />
             {fieldErrors.name && <p className="mt-1 text-sm text-danger">{fieldErrors.name}</p>}
@@ -105,7 +105,7 @@ const SignupPage = () => {
               name="email"
               type="email"
               autoComplete="email"
-              className="w-full rounded-md border border-foreground/20 bg-background px-3 py-2 text-foreground placeholder:text-foreground/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring"
               placeholder="mail@example.com"
             />
             {fieldErrors.email && <p className="mt-1 text-sm text-danger">{fieldErrors.email}</p>}
@@ -120,7 +120,7 @@ const SignupPage = () => {
               name="password"
               type="password"
               autoComplete="new-password"
-              className="w-full rounded-md border border-foreground/20 bg-background px-3 py-2 text-foreground placeholder:text-foreground/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
+              className="w-full rounded-md border border-input bg-background px-3 py-2 text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring"
               placeholder="8文字以上"
             />
             {fieldErrors.password && (
@@ -137,7 +137,7 @@ const SignupPage = () => {
           </button>
         </form>
 
-        <p className="mt-4 text-center text-sm text-foreground/60">
+        <p className="mt-4 text-center text-sm text-muted-foreground">
           既にアカウントをお持ちの方は{" "}
           <Link href="/login" className="text-primary hover:underline">
             ログイン
