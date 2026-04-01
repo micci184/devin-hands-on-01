@@ -60,6 +60,7 @@ export const KanbanBoard = ({ tasks, projectId, projectKey, members }: KanbanBoa
             status={col.status}
             label={col.label}
             tasks={tasks.filter((t) => t.status === col.status)}
+            projectId={projectId}
             projectKey={projectKey}
             onQuickCreate={handleQuickCreate}
           />

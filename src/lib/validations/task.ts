@@ -10,3 +10,17 @@ export const createTaskSchema = z.object({
 });
 
 export type CreateTaskInput = z.infer<typeof createTaskSchema>;
+
+export const updateTaskSchema = z.object({
+  title: z.string().min(1, "タイトルは必須です").optional(),
+  description: z.string().nullable().optional(),
+  status: z.enum(["BACKLOG", "TODO", "IN_PROGRESS", "IN_REVIEW", "DONE"]).optional(),
+  priority: z.enum(["URGENT", "HIGH", "MEDIUM", "LOW", "NONE"]).optional(),
+  assigneeId: z.string().nullable().optional(),
+  dueDate: z.string().nullable().optional(),
+  startDate: z.string().nullable().optional(),
+  estimatedHours: z.number().nullable().optional(),
+  actualHours: z.number().nullable().optional(),
+});
+
+export type UpdateTaskInput = z.infer<typeof updateTaskSchema>;
