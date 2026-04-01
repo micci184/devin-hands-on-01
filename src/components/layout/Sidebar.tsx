@@ -32,9 +32,7 @@ export const Sidebar = () => {
     >
       <div className="flex h-14 items-center justify-between border-b border-foreground/10 px-3">
         {!collapsed && (
-          <span className="text-sm font-bold text-foreground truncate">
-            TaskBoard
-          </span>
+          <span className="text-sm font-bold text-foreground truncate">TaskBoard</span>
         )}
         <button
           onClick={() => setCollapsed(!collapsed)}
@@ -47,8 +45,7 @@ export const Sidebar = () => {
 
       <nav className="flex-1 space-y-1 p-2">
         {navItems.map((item) => {
-          const isActive =
-            pathname === item.href || pathname.startsWith(item.href + "/");
+          const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
           const Icon = item.icon;
 
           return (

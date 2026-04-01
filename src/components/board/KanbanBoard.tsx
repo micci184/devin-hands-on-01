@@ -1,48 +1,48 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
+import { useState } from "react";
 
-import { KanbanColumn } from '@/components/board/KanbanColumn'
-import { TaskCreateModal } from '@/components/tasks/TaskCreateModal'
+import { KanbanColumn } from "@/components/board/KanbanColumn";
+import { TaskCreateModal } from "@/components/tasks/TaskCreateModal";
 
-import type { Priority, TaskStatus } from '@prisma/client'
+import type { Priority, TaskStatus } from "@prisma/client";
 
 interface Task {
-  id: string
-  taskNumber: number
-  title: string
-  priority: Priority
-  status: TaskStatus
-  dueDate: string | Date | null
+  id: string;
+  taskNumber: number;
+  title: string;
+  priority: Priority;
+  status: TaskStatus;
+  dueDate: string | Date | null;
   assignee: {
-    id: string
-    name: string
-    avatarUrl: string | null
-  } | null
+    id: string;
+    name: string;
+    avatarUrl: string | null;
+  } | null;
 }
 
 interface KanbanBoardProps {
-  tasks: Task[]
-  projectId: string
-  projectKey: string
+  tasks: Task[];
+  projectId: string;
+  projectKey: string;
 }
 
 const columns: { status: TaskStatus; label: string }[] = [
-  { status: 'BACKLOG', label: 'Backlog' },
-  { status: 'TODO', label: 'Todo' },
-  { status: 'IN_PROGRESS', label: 'In Progress' },
-  { status: 'IN_REVIEW', label: 'In Review' },
-  { status: 'DONE', label: 'Done' },
-]
+  { status: "BACKLOG", label: "Backlog" },
+  { status: "TODO", label: "Todo" },
+  { status: "IN_PROGRESS", label: "In Progress" },
+  { status: "IN_REVIEW", label: "In Review" },
+  { status: "DONE", label: "Done" },
+];
 
 export const KanbanBoard = ({ tasks, projectId, projectKey }: KanbanBoardProps) => {
-  const [showCreateModal, setShowCreateModal] = useState(false)
-  const [defaultStatus, setDefaultStatus] = useState<TaskStatus>('BACKLOG')
+  const [showCreateModal, setShowCreateModal] = useState(false);
+  const [defaultStatus, setDefaultStatus] = useState<TaskStatus>("BACKLOG");
 
   const handleQuickCreate = (status: TaskStatus) => {
-    setDefaultStatus(status)
-    setShowCreateModal(true)
-  }
+    setDefaultStatus(status);
+    setShowCreateModal(true);
+  };
 
   return (
     <>
@@ -67,5 +67,5 @@ export const KanbanBoard = ({ tasks, projectId, projectKey }: KanbanBoardProps) 
         />
       )}
     </>
-  )
-}
+  );
+};
