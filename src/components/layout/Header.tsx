@@ -56,11 +56,11 @@ export const Header = () => {
   }, []);
 
   return (
-    <header className="relative flex h-14 items-center justify-between border-b border-foreground/10 bg-background px-4">
+    <header className="relative flex h-14 items-center justify-between border-b border-border bg-background px-4">
       <div className="flex items-center gap-3">
         <button
           onClick={() => setShowMobileNav(!showMobileNav)}
-          className="flex h-8 w-8 items-center justify-center rounded-md text-foreground/60 hover:bg-foreground/5 hover:text-foreground md:hidden"
+          className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground md:hidden"
           aria-label="メニュー"
         >
           <Menu size={18} />
@@ -69,13 +69,13 @@ export const Header = () => {
         <div className="relative hidden sm:block">
           <Search
             size={16}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-foreground/40"
+            className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
           />
           <input
             type="text"
             placeholder="検索..."
             disabled
-            className="h-8 w-64 rounded-md border border-foreground/10 bg-foreground/5 pl-9 pr-3 text-sm text-foreground placeholder:text-foreground/40 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary disabled:cursor-not-allowed disabled:opacity-50"
+            className="h-8 w-64 rounded-md border border-input bg-muted pl-9 pr-3 text-sm text-foreground placeholder:text-muted-foreground focus:border-primary focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50"
           />
         </div>
       </div>
@@ -83,7 +83,7 @@ export const Header = () => {
       <div className="flex items-center gap-2">
         <Link
           href="/notifications"
-          className="relative flex h-8 w-8 items-center justify-center rounded-md text-foreground/60 hover:bg-foreground/5 hover:text-foreground"
+          className="relative flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground"
           aria-label="通知"
         >
           <Bell size={18} />
@@ -95,7 +95,7 @@ export const Header = () => {
               setShowThemeMenu(!showThemeMenu);
               setShowUserMenu(false);
             }}
-            className="flex h-8 w-8 items-center justify-center rounded-md text-foreground/60 hover:bg-foreground/5 hover:text-foreground"
+            className="flex h-8 w-8 items-center justify-center rounded-md text-muted-foreground hover:bg-accent hover:text-foreground"
             aria-label="テーマ切替"
           >
             {theme === "dark" ? (
@@ -108,7 +108,7 @@ export const Header = () => {
           </button>
 
           {showThemeMenu && (
-            <div className="absolute right-0 top-full z-50 mt-1 w-36 rounded-md border border-foreground/10 bg-background py-1 shadow-lg">
+            <div className="absolute right-0 top-full z-50 mt-1 w-36 rounded-md border border-border bg-popover py-1 shadow-lg">
               {themeOptions.map((option) => {
                 const Icon = option.icon;
                 return (
@@ -121,7 +121,7 @@ export const Header = () => {
                     className={`flex w-full items-center gap-2 px-3 py-1.5 text-sm transition-colors ${
                       theme === option.value
                         ? "text-primary"
-                        : "text-foreground/60 hover:bg-foreground/5 hover:text-foreground"
+                        : "text-muted-foreground hover:bg-accent hover:text-foreground"
                     }`}
                   >
                     <Icon size={14} />
@@ -146,16 +146,18 @@ export const Header = () => {
           </button>
 
           {showUserMenu && (
-            <div className="absolute right-0 top-full z-50 mt-1 w-48 rounded-md border border-foreground/10 bg-background py-1 shadow-lg">
-              <div className="border-b border-foreground/10 px-3 py-2">
+            <div className="absolute right-0 top-full z-50 mt-1 w-48 rounded-md border border-border bg-popover py-1 shadow-lg">
+              <div className="border-b border-border px-3 py-2">
                 <p className="text-sm font-medium text-foreground truncate">
                   {session?.user?.name ?? "ユーザー"}
                 </p>
-                <p className="text-xs text-foreground/60 truncate">{session?.user?.email ?? ""}</p>
+                <p className="text-xs text-muted-foreground truncate">
+                  {session?.user?.email ?? ""}
+                </p>
               </div>
               <button
                 onClick={() => signOut({ callbackUrl: "/login" })}
-                className="flex w-full items-center gap-2 px-3 py-1.5 text-sm text-foreground/60 hover:bg-foreground/5 hover:text-foreground"
+                className="flex w-full items-center gap-2 px-3 py-1.5 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"
               >
                 <LogOut size={14} />
                 <span>ログアウト</span>
@@ -166,7 +168,7 @@ export const Header = () => {
       </div>
 
       {showMobileNav && (
-        <div className="absolute left-0 top-14 z-50 w-full border-b border-foreground/10 bg-background p-2 shadow-lg md:hidden">
+        <div className="absolute left-0 top-14 z-50 w-full border-b border-border bg-popover p-2 shadow-lg md:hidden">
           <nav className="space-y-1">
             {mobileNavItems.map((item) => {
               const isActive = pathname === item.href || pathname.startsWith(item.href + "/");
@@ -179,8 +181,8 @@ export const Header = () => {
                   onClick={() => setShowMobileNav(false)}
                   className={`flex items-center gap-3 rounded-md px-3 py-2 text-sm transition-colors ${
                     isActive
-                      ? "bg-primary/10 text-primary font-medium"
-                      : "text-foreground/60 hover:bg-foreground/5 hover:text-foreground"
+                      ? "bg-accent text-primary font-medium"
+                      : "text-muted-foreground hover:bg-accent hover:text-foreground"
                   }`}
                 >
                   <Icon size={18} />

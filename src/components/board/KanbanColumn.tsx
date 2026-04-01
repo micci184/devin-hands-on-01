@@ -34,17 +34,17 @@ export const KanbanColumn = ({
   onQuickCreate,
 }: KanbanColumnProps) => {
   return (
-    <div className="flex w-72 shrink-0 flex-col rounded-lg bg-foreground/3">
+    <div className="flex w-72 shrink-0 flex-col rounded-lg bg-muted/50">
       <div className="flex items-center justify-between px-3 py-2">
         <div className="flex items-center gap-2">
-          <h3 className="text-sm font-semibold text-foreground/70">{label}</h3>
-          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-foreground/10 px-1.5 text-xs text-foreground/50">
+          <h3 className="text-sm font-semibold text-muted-foreground">{label}</h3>
+          <span className="flex h-5 min-w-5 items-center justify-center rounded-full bg-muted px-1.5 text-xs text-muted-foreground">
             {tasks.length}
           </span>
         </div>
         <button
           onClick={() => onQuickCreate(status)}
-          className="flex h-6 w-6 items-center justify-center rounded text-foreground/40 hover:bg-foreground/10 hover:text-foreground"
+          className="flex h-6 w-6 items-center justify-center rounded text-muted-foreground hover:bg-accent hover:text-foreground"
           aria-label={`${label}にタスクを追加`}
         >
           <Plus size={14} />

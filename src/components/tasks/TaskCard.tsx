@@ -23,8 +23,8 @@ const priorityConfig: Record<Priority, { label: string; className: string }> = {
   URGENT: { label: "緊急", className: "bg-danger/10 text-danger" },
   HIGH: { label: "高", className: "bg-warning/10 text-warning" },
   MEDIUM: { label: "中", className: "bg-primary/10 text-primary" },
-  LOW: { label: "低", className: "bg-foreground/10 text-foreground/60" },
-  NONE: { label: "-", className: "bg-foreground/5 text-foreground/40" },
+  LOW: { label: "低", className: "bg-muted text-muted-foreground" },
+  NONE: { label: "-", className: "bg-muted text-muted-foreground" },
 };
 
 export const TaskCard = ({ task, projectKey }: TaskCardProps) => {
@@ -33,9 +33,9 @@ export const TaskCard = ({ task, projectKey }: TaskCardProps) => {
   const isOverdue = dueDate ? dueDate < new Date() : false;
 
   return (
-    <div className="rounded-lg border border-foreground/10 bg-background p-3 shadow-sm transition-shadow hover:shadow-md">
+    <div className="rounded-lg border border-border bg-card p-3 shadow-sm transition-shadow hover:shadow-md">
       <div className="mb-2 flex items-center justify-between">
-        <span className="text-xs text-foreground/40">
+        <span className="text-xs text-muted-foreground">
           {projectKey}-{task.taskNumber}
         </span>
         {task.priority !== "NONE" && (
@@ -45,12 +45,12 @@ export const TaskCard = ({ task, projectKey }: TaskCardProps) => {
         )}
       </div>
 
-      <p className="text-sm font-medium text-foreground">{task.title}</p>
+      <p className="text-sm font-medium text-card-foreground">{task.title}</p>
 
       <div className="mt-3 flex items-center justify-between">
         {dueDate && (
           <div
-            className={`flex items-center gap-1 text-xs ${isOverdue ? "text-danger" : "text-foreground/50"}`}
+            className={`flex items-center gap-1 text-xs ${isOverdue ? "text-danger" : "text-muted-foreground"}`}
           >
             <Calendar size={12} />
             <span>{format(dueDate, "M/d")}</span>
