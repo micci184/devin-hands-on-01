@@ -46,7 +46,7 @@ const BoardPage = async ({ params }: BoardPageProps) => {
       <div className="mb-6 flex items-center justify-between">
         <div>
           <h1 className="text-2xl font-bold text-foreground">{project.name}</h1>
-          <p className="text-sm text-foreground/60">カンバンボード</p>
+          <p className="text-sm text-muted-foreground">カンバンボード</p>
         </div>
       </div>
 

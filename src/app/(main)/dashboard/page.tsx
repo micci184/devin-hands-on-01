@@ -6,7 +6,9 @@ const DashboardPage = async () => {
   return (
     <div>
       <h1 className="text-2xl font-bold text-foreground">ダッシュボード</h1>
-      <p className="mt-2 text-foreground/60">ようこそ、{session?.user?.name ?? "ユーザー"} さん</p>
+      <p className="mt-2 text-muted-foreground">
+        ようこそ、{session?.user?.name ?? "ユーザー"} さん
+      </p>
     </div>
   );
 };
