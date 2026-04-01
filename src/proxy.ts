@@ -6,7 +6,7 @@ import type { NextRequest } from "next/server";
 
 const publicPaths = ["/login", "/signup", "/api/auth"];
 
-export default auth((req: NextRequest) => {
+export const proxy = auth((req: NextRequest) => {
   const { pathname } = req.nextUrl;
 
   const isPublic = publicPaths.some((path) => pathname.startsWith(path));
