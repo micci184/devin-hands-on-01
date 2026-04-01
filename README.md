@@ -31,6 +31,13 @@ npx prisma migrate dev
 npm run dev
 ```
 
+## Documentation
+
+- [ER図（Mermaid）](docs/erd.md)
+- [仕様書](docs/spec.md)
+- [ユーザーストーリー](docs/user-stories.md)
+- [Issue 計画](docs/issue.md)
+
 ## Project Structure
 
 ```
