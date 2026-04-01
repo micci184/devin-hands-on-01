@@ -24,6 +24,12 @@ const BoardPage = async ({ params }: BoardPageProps) => {
     redirect("/projects");
   }
 
+  const members = await prisma.projectMember.findMany({
+    where: { projectId },
+    include: { user: { select: { id: true, name: true, avatarUrl: true } } },
+  });
+  const projectMembers = members.map((m) => m.user);
+
   const tasks = await prisma.task.findMany({
     where: { projectId },
     include: {
@@ -50,7 +56,12 @@ const BoardPage = async ({ params }: BoardPageProps) => {
         </div>
       </div>
 
-      <KanbanBoard tasks={serializedTasks} projectId={projectId} projectKey={project.key} />
+      <KanbanBoard
+        tasks={serializedTasks}
+        projectId={projectId}
+        projectKey={project.key}
+        members={projectMembers}
+      />
     </div>
   );
 };
