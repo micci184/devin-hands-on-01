@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import { Calendar } from "lucide-react";
 import { format } from "date-fns";
 
@@ -16,6 +18,7 @@ interface TaskCardProps {
       avatarUrl: string | null;
     } | null;
   };
+  projectId: string;
   projectKey: string;
 }
 
@@ -27,13 +30,16 @@ const priorityConfig: Record<Priority, { label: string; className: string }> = {
   NONE: { label: "-", className: "bg-muted text-muted-foreground" },
 };
 
-export const TaskCard = ({ task, projectKey }: TaskCardProps) => {
+export const TaskCard = ({ task, projectId, projectKey }: TaskCardProps) => {
   const priority = priorityConfig[task.priority];
   const dueDate = task.dueDate ? new Date(task.dueDate) : null;
   const isOverdue = dueDate ? dueDate < new Date() : false;
 
   return (
-    <div className="rounded-lg border border-border bg-card p-3 shadow-sm transition-shadow hover:shadow-md">
+    <Link
+      href={`/projects/${projectId}/tasks/${task.id}`}
+      className="block rounded-lg border border-border bg-card p-3 shadow-sm transition-shadow hover:shadow-md"
+    >
       <div className="mb-2 flex items-center justify-between">
         <span className="text-xs text-muted-foreground">
           {projectKey}-{task.taskNumber}
@@ -67,6 +73,6 @@ export const TaskCard = ({ task, projectKey }: TaskCardProps) => {
           </div>
         )}
       </div>
-    </div>
+    </Link>
   );
 };

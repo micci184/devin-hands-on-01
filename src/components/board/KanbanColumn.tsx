@@ -22,6 +22,7 @@ interface KanbanColumnProps {
   status: TaskStatus;
   label: string;
   tasks: Task[];
+  projectId: string;
   projectKey: string;
   onQuickCreate: (status: TaskStatus) => void;
 }
@@ -30,6 +31,7 @@ export const KanbanColumn = ({
   status,
   label,
   tasks,
+  projectId,
   projectKey,
   onQuickCreate,
 }: KanbanColumnProps) => {
@@ -53,7 +55,7 @@ export const KanbanColumn = ({
 
       <div className="flex-1 space-y-2 overflow-y-auto px-2 pb-2">
         {tasks.map((task) => (
-          <TaskCard key={task.id} task={task} projectKey={projectKey} />
+          <TaskCard key={task.id} task={task} projectId={projectId} projectKey={projectKey} />
         ))}
       </div>
     </div>
