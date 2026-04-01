@@ -92,9 +92,9 @@ export const PATCH = async (
     }
 
     const memberRole = existingTask.project.projectMembers[0]?.role;
-    if (memberRole === "VIEWER") {
+    if (!memberRole || memberRole === "VIEWER") {
       return NextResponse.json(
-        { error: { code: "FORBIDDEN", message: "VIEWER はタスクを編集できません" } },
+        { error: { code: "FORBIDDEN", message: "タスクを編集する権限がありません" } },
         { status: 403 },
       );
     }
@@ -115,8 +115,8 @@ export const PATCH = async (
     }
 
     const updateData: Prisma.TaskUpdateInput = {};
-    const oldValues: Record<string, unknown> = {};
-    const newValues: Record<string, unknown> = {};
+    const oldValues: Record<string, string | number | boolean | null> = {};
+    const newValues: Record<string, string | number | boolean | null> = {};
 
     if (parsed.data.title !== undefined) {
       oldValues.title = existingTask.title;
@@ -247,9 +247,9 @@ export const DELETE = async (
     }
 
     const memberRole = task.project.projectMembers[0]?.role;
-    if (memberRole === "VIEWER") {
+    if (!memberRole || memberRole === "VIEWER") {
       return NextResponse.json(
-        { error: { code: "FORBIDDEN", message: "VIEWER はタスクを削除できません" } },
+        { error: { code: "FORBIDDEN", message: "タスクを削除する権限がありません" } },
         { status: 403 },
       );
     }
