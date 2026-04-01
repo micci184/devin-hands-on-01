@@ -34,6 +34,7 @@ npm run dev
 ## Documentation
 
 - [ER図（Mermaid）](docs/erd.md)
+- [OpenAPI 仕様](docs/openapi.yaml)
 - [仕様書](docs/spec.md)
 - [ユーザーストーリー](docs/user-stories.md)
 - [Issue 計画](docs/issue.md)
